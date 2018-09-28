@@ -1,12 +1,17 @@
 package morse;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Morse{
 	
 	private static String readPlain(File file) {
-		
+		/*
+		 Lee archivo normal
+		 */
 		String texto = "";
 		try {
 			FileReader read = new FileReader(file);
@@ -25,7 +30,9 @@ public class Morse{
 	}
 	
 	private static String readMorse(File file) {
-		
+		/*
+		 Lee archivo morse y adapta la salida
+		 */
 		String texto = "";
 		try {
 			FileReader read = new FileReader(file);
@@ -45,8 +52,11 @@ public class Morse{
 	}
 
 	private static void writeFile(String text) {
+		/*
+		 Crear nuevo archivo con nombre 'test.txt'
+		 */
 		try {
-			File file = new File("test0.txt");				//// TESTING
+			File file = new File("test.txt");
 			FileWriter fr = new FileWriter(file);
             fr.write(text);
             fr.close();
@@ -66,10 +76,8 @@ public class Morse{
 		String result = readPlain(filePlain);
 				
 		String translated = morse.getMorse(result);
-		
-		System.out.println(translated);
 
-		//writeFile(translated);
+		System.out.println(translated);
 		
 		
 		// Morse a texto
@@ -82,7 +90,9 @@ public class Morse{
 		
 		System.out.println(translated);
 		
-		//writeFile(translated);
+		
+		// Crea nuevo archivo
+		// writeFile(translated);
 	}
 
 }

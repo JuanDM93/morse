@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Parser {
-
+	
+	// Mapa principal morse
 	private static HashMap<Character, String> map = new HashMap<Character, String>();
 
 	public Parser() {
-		
+		/*
+		 Construye un parser con el mapa actualizado
+		 */
 		char[] nums = "1234567890".toCharArray();
 		
 		String[] morse = build();
@@ -19,7 +22,7 @@ public class Parser {
 	}
 	
 	private String[] build() {
-		
+		// Fancy math numerals morse
 		String[] result = new String[36];
 		
 		for (int i = 0; i < 5; i++) {
@@ -44,6 +47,7 @@ public class Parser {
 			result[i + 5] = temp;
 		}
 		
+		// Trampa mortal 4
 		map.put('a', ".-");
         map.put('b', "-...");
         map.put('c', "-.-.");
@@ -75,7 +79,9 @@ public class Parser {
 	}
 
 	public String getMorse(String text) {
-		
+		/*
+		 Metodo para traducir de texto a morse
+		 */
 		ArrayList<String> result = new ArrayList<String>();
 		
 		for (char letter : text.toCharArray()) {
@@ -91,7 +97,9 @@ public class Parser {
 	}
 
 	public String getNoMorse(String text) {
-		
+		/*
+		 Metodo para traducir de morse a texto
+		 */
 		ArrayList<Character> result = new ArrayList<Character>();
 		String code = "";
 		
@@ -119,7 +127,7 @@ public class Parser {
 
 	
 	private char findLetter(String code) {
-		
+		// Trampa mortal
 		String test = "";
 		for (char c : map.keySet()) {
 			test = map.get(c);
@@ -131,7 +139,9 @@ public class Parser {
 	}
 
 	private static String cleanChar(ArrayList<Character> temp) {
-		
+		/*
+		 Adaptacion de salida morse
+		 */
 		String result = temp.toString();
 		
 		result = result.replace(",", "");
@@ -144,7 +154,9 @@ public class Parser {
 	}
 	
 	private static String clean(ArrayList<String> temp) {
-		
+		/*
+		 Adaptacion de salida normal
+		 */
 		return temp.toString().replace("[", "").replace("]", "").replace(",", "");
 	}
 
