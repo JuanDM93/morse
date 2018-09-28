@@ -8,18 +8,30 @@ import java.util.Scanner;
 
 public class Morse{
 	
-	private static String readPlain(File file) {
+	private static String read(File file) {
 		/*
-		 Lee archivo normal
+		 Lee archivo y adapta segun el tipo
 		 */
 		String texto = "";
 		try {
 			FileReader read = new FileReader(file);
 			Scanner scan = new Scanner(read);
-				
-			while (scan.hasNext() == true) {
-				texto += scan.next();
-				texto += " ";
+			
+			if (!scan.hasNext("-")) {
+
+				scan.reset();
+				scan.useDelimiter("  ");
+				while (scan.hasNext() == true) {
+					texto += scan.next();
+					texto += " ";
+				}
+			}
+			else {				
+				scan.reset();
+				while (scan.hasNext() == true) {
+					texto += scan.next();
+					texto += "*";
+				}
 			}
 			scan.close();						
 		}
@@ -29,34 +41,12 @@ public class Morse{
 		return texto;
 	}
 	
-	private static String readMorse(File file) {
+	private static void writeFile(String text, String name) {
 		/*
-		 Lee archivo morse y adapta la salida
-		 */
-		String texto = "";
-		try {
-			FileReader read = new FileReader(file);
-			Scanner scan = new Scanner(read);
-			scan.useDelimiter("  ");
-				
-			while (scan.hasNext() == true) {
-				texto += scan.next();
-				texto += "*";
-			}
-			scan.close();						
-		}
-		catch(Exception ex) {
-			ex.printStackTrace();
-		}	
-		return texto;
-	}
-
-	private static void writeFile(String text) {
-		/*
-		 Crear nuevo archivo con nombre 'test.txt'
+		 Crea nuevo archivo con nombre 'test.txt'
 		 */
 		try {
-			File file = new File("test.txt");
+			File file = new File(name);
 			FileWriter fr = new FileWriter(file);
             fr.write(text);
             fr.close();
@@ -69,30 +59,55 @@ public class Morse{
 				
 		Parser morse = new Parser();
 		
-		// Texto a Morse
+		String name = "test.txt";
 		
-		File filePlain = new File("testPlain.txt");
+		try {
+			File file = new File(args[0]);
+			
+			String result = read(file);
+			
+			String translated = "";
+			
+			if (result.contains("-")) {
+				translated = morse.getNoMorse(result);
+			}
+			else {
+				translated = morse.getMorse(result);
+			}
+			
+			writeFile(translated, name);
+		}
+		catch (Exception ex) {
+			System.out.println("No input given. Goodbye!");;
+		}
+		
+		/* Texto a Morse
+		
+		File filePlain = new File("src/testPlain.txt");
 				
-		String result = readPlain(filePlain);
+		String result = read(filePlain);
 				
 		String translated = morse.getMorse(result);
 
 		System.out.println(translated);
 		
+		// Crea nuevo archivo
+		//writeFile(translated, name);
+		*/
 		
-		// Morse a texto
+		/* Morse a texto
 		
-		File fileMorse = new File("testMorse.txt");
+		File fileMorse = new File("src/testMorse.txt");
 
-		result = readMorse(fileMorse);
+		result = read(fileMorse);
 		
 		translated = morse.getNoMorse(result);
 		
 		System.out.println(translated);
 		
-		
 		// Crea nuevo archivo
-		// writeFile(translated);
+		//writeFile(translated, name);		 
+		 */
 	}
 
 }
